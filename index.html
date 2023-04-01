@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Do You Marry Me?</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #F5D0A9;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 60px;
+        font-family: "Courier New", Courier, monospace;
+      }
+      #button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+      }
+      button {
+        margin: 0 50px;
+        padding: 20px 50px;
+        font-size: 30px;
+        font-family: "Courier New", Courier, monospace;
+        border-radius: 20px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+        z-index: 1;
+        animation: moveButton 2s infinite alternate ease-in-out;
+      }
+      button:hover {
+        animation-play-state: paused;
+      }
+      #no-button {
+        background-color: #FF6347;
+        color: white;
+      }
+      #yes-button {
+        background-color: #90EE90;
+        color: #006400;
+      }
+      @keyframes moveButton {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(50px);
+        }
+      }
+      #message {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        padding: 50px;
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: 5px 5px 5px #888888;
+      }
+      #message.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Do You Marry Me Imene?</h1>
+    <div id="button-container">
+      <button id="no-button">No</button>
+      <button id="yes-button">Yes</button>
+    </div>
+    <div id="message">
+      <h2>Thank you my love!</h2>
+    </div>
+    <script>
+      const noButton = document.getElementById("no-button");
+      const yesButton = document.getElementById("yes-button");
+      const message = document.getElementById("message");
+      const buttonRect = noButton.getBoundingClientRect();
+      let buttonX = Math.floor(Math.random() * window.innerWidth);
+      let buttonY = Math.floor(Math.random() * window.innerHeight);
+      noButton.style.left = `${buttonX}px`;
+      noButton.style.top = `${buttonY}px`;
+      function moveNoButton() {
+        const distX = buttonX - (buttonRect.left + buttonRect.width / 2);
+        const distY = buttonY - (buttonRect.top + buttonRect.height / 2);
+        buttonX -= distX * 0.01;
+        buttonY -= distY * 0.01;
+        const dist
+
+        = Math.sqrt(distX * distX + distY * distY);
+        if (dist < 100) {
+          const angle = Math.atan2(distY, distX);
+          const newX = buttonX + (Math.cos(angle) * 10);
+          const newY = buttonY + (Math.sin(angle) * 10);
+          const newLeft = newX - (buttonRect.width / 2);
+          const newTop = newY - (buttonRect.height /          2);
+          noButton.style.left = `${newLeft}px`;
+          noButton.style.top = `${newTop}px`;
+        } else {
+          noButton.style.left = `${buttonX}px`;
+          noButton.style.top = `${buttonY}px`;
+        }
+        requestAnimationFrame(moveNoButton);
+      }
+      moveNoButton();
+      noButton.addEventListener("mouseover", () => {
+        buttonX = Math.floor(Math.random() * window.innerWidth);
+        buttonY = Math.floor(Math.random() * window.innerHeight);
+      });
+      yesButton.addEventListener("click", () => {
+        message.classList.add("show");
+      });
+    </script>
+  </body>
+</html>
+
